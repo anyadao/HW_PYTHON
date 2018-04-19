@@ -84,6 +84,10 @@ def change_number_by_name():
         if entry["name"] == name:
             entry["phone_number"] = number
     print_phonebook()
+
+
+    print_phonebook()
+
 #-------------------------------------------------------------------------------
 def find_entry_address_phonebook():
     address = str(input("    Enter address: "))
@@ -127,7 +131,7 @@ def find_entry_age_phonebook():
 #------------------------------------------------------------------------------
 def delete_entry_name_phonebook():
     name = str(input("  Enter name to delete info   "))
-    condition = lambda list: list["name"] == name
+    condition = lambda entry: entry["name"] == name
     found = False
     for i in range(len(phone_book)-1, -1, -1):
         if condition(phone_book[i]):
@@ -151,12 +155,12 @@ def print_phonebook_by_age():
 #------------------------------------------------------------------------------
 def increase_age():
     shift = int(input("Write number to shift the age of persons: "))
-    for list in phone_book:
-        list['age'] += shift
+    for entry in phone_book:
+        entry["age"] += shift
     print_phonebook()
 #------------------------------------------------------------------------------
 def avr_age_of_all_persons():
-    avr_age = (sum([list['age'] for list in phone_book]))/len(phone_book)
+    avr_age = (sum([entry["age"] for entry in phone_book]))/len(phone_book)
     printInfo("Average age of persons is: %d " %(avr_age))
 
 #------------------------------------------------------------------------------
@@ -220,7 +224,7 @@ def main():
                   '8':  avr_age_of_all_persons,
                   '9':  increase_age,
                   '10': find_entry_address_phonebook,
-                  '11': change_number_by_name(),
+                  '11': change_number_by_name,
 
                   '0':  exit,
                   's':  save_to_file,
