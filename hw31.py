@@ -84,10 +84,6 @@ def change_number_by_name():
         if entry["name"] == name:
             entry["phone_number"] = number
     print_phonebook()
-
-
-    print_phonebook()
-
 #-------------------------------------------------------------------------------
 def find_entry_address_phonebook():
     address = str(input("    Enter address: "))
