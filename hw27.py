@@ -8,39 +8,44 @@
 # 	2. Из оставшихся берём первые три символа, произвольно перемешиваем.
 # 	3. Полученную тройку фиксируем, т.е. она уже не будет участвовать в дальнейшем перемешивании.
 # 	4. Повторяем пункт 2, пока незафиксированные символы не кончатся.
-#
 # def pemrtuate(text): # returns permuted text
 # 	pass
-#
 # Ccылка по теме: https://geektimes.ru/post/148896/
+
 
 import random
 import re
+
 def pemrtuate(text):
     changed_text = ''
-
-    for word in text.split(' '):
-        length = len(word)
-        if length <= 3:
-            changed_text = changed_text + word + ' '
-        elif re.match('[.,:!?-]]', word):
-            changed_text = changed_text + word + ' '
+    space = ' '
+    for word in text.split(space):
+        length_for_random = len(word)
+        word_length = len(word)
+        fixed_length = 2
+        three_symb = 3
+        randomize_letters = 4
+        start = 1
+        fixed = []
+        if word_length <= randomize_letters:
+            changed_text = changed_text + word + space
+        elif re.match('[.,:!?-]', word):
+            changed_text = changed_text + word + space
         else:
-            fixed = []
             fixed.insert(0, word[0])
-            fixed.insert(length-1, word[length-1])
-            first_three = list(word[1:4])
-            random.shuffle(first_three)
-            other_letters = list(word[4:length-1])
-            random.shuffle(other_letters)
-            for let in range(1, 4):
-                fixed.insert(let, first_three[let-1] )
-            for letter in range(len(other_letters)):
-                fixed.insert(letter+4, other_letters[letter])
-            joined_fixed = ''
-            for i in range(length):
-                joined_fixed += fixed[i]
-            changed_text = changed_text + joined_fixed + ' '
+            length_for_random -= fixed_length
+            while length_for_random >= three_symb:
+                to_random = list(word[start:randomize_letters])
+                random.shuffle(to_random)
+                fixed[start:len(to_random)] = to_random[0:len(to_random)]
+                length_for_random -= three_symb
+                if length_for_random < three_symb:
+                    fixed[randomize_letters:word_length] = word[randomize_letters: word_length-1]
+                start += three_symb
+                randomize_letters += three_symb
+            fixed.insert(word_length - 1, word[word_length - 1])
+            joined_fixed_symbols = ''.join(fixed)
+            changed_text = changed_text + joined_fixed_symbols + space
     return changed_text
 
 text = """Начало рабочего дня всегда вызывало у Уинстона глубокий непроизвольный вздох, хотя монитор и находился рядом. 
